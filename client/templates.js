@@ -23,9 +23,9 @@ Template.myTemplate.topGenresChart = function () {
     }).forEach(function (line) {
         if (line.trend == "trump") {
             //console.log(line);
-            var point = [new Date(line.date), line.value];
+            var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
             trendData.push(point);
-            console.log(line.date);
+
         }
     });
 
@@ -40,17 +40,7 @@ Template.myTemplate.topGenresChart = function () {
         //console.log(line.date);
     });
 
-    var theData2 = [];
-    instruments.find({}, {
-        sort: {
-            date: 1
-        }
-    }).forEach(function (line) {
-        var point = [line.date, line.price * 0.2];
-        theData2.push(point);
-        //console.log(line.date);
-    });
-
+    console.log(trendData);
     return {
         chart: {
             zoomType: 'x'
@@ -61,17 +51,23 @@ Template.myTemplate.topGenresChart = function () {
         xAxis: {
             type: 'datetime'
         },
-        yAxis: {
+        yAxis: [{ // Primary yAxis
             title: {
                 text: 'Price'
+            },
+            opposite: true
+        }, {
+            title: {
+                text: 'Trend'
             }
-        },
+        }],
         legend: {
             enabled: false
         },
         series: [
             {
                 type: 'line',
+                yAxis: 0,
                 name: 'SPX',
                 data: theData,
                 tooltip: {
@@ -81,6 +77,7 @@ Template.myTemplate.topGenresChart = function () {
             ,
             {
                 type: 'line',
+                yAxis: 1,
                 name: 'Trump',
                 data: trendData,
                 tooltip: {
