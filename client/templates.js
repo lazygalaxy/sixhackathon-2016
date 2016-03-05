@@ -31,18 +31,7 @@ initGlobalMap = function () {
             el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
         }
     });
-
-
-    //var container = document.getElementById('visjs_area');
 }
-
-
-
-
-
-
-
-
 
 Template.myTemplate.topGenresChart = function () {
     var theData = [];
@@ -72,7 +61,6 @@ Template.myTemplate.topGenresChart = function () {
         }
     });
 
-    //console.log(trendData);
     return {
         chart: {
             zoomType: 'x'
