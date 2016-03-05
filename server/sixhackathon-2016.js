@@ -24,7 +24,6 @@ Meteor.startup(function () {
 
     var fileContents = Assets.getText('trends.csv');
     var fileContentsArray = fileContents.split(/\r?\n/);
-    console.log(fileContentsArray.length);
 
     var line = fileContentsArray[0];
     var trendArray = line.split(',');
@@ -33,7 +32,6 @@ Meteor.startup(function () {
                 trend: trendArray[j]
             })) {
             for (var i = 1; i < fileContentsArray.length; i++) {
-
                 var line = fileContentsArray[i];
                 var values = line.split(',');
                 //console.log(values);
@@ -43,6 +41,7 @@ Meteor.startup(function () {
                     value: parseFloat(values[j])
                 });
             }
+            console.log("loading " + fileContentsArray.length + " " + trendArray[j]);
         }
     }
 });

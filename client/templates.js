@@ -48,17 +48,16 @@ Template.myTemplate.topGenresChart = function () {
     });
 
     var trendData = [];
-    trends.find({}, {
+    trends.find({
+        trend: theTrend
+    }, {
         sort: {
             date: 1
         }
     }).forEach(function (line) {
-        if (line.trend == "trump") {
-            //console.log(line);
-            var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
-            trendData.push(point);
-
-        }
+        //console.log(line);
+        var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
+        trendData.push(point);
     });
 
     return {
@@ -66,7 +65,7 @@ Template.myTemplate.topGenresChart = function () {
             zoomType: 'x'
         },
         title: {
-            text: theSymbol + ' vs Trend'
+            text: theSymbol + ' vs Trend ' + theTrend
         },
         xAxis: {
             type: 'datetime'
@@ -100,7 +99,7 @@ Template.myTemplate.topGenresChart = function () {
             {
                 type: 'line',
                 yAxis: 1,
-                name: 'Trump',
+                name: theTrend,
                 data: trendData,
                 tooltip: {
                     valueDecimals: 2
