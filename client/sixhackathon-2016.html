@@ -54,9 +54,9 @@
                                     <span class="caret"></span> Trend {{getTrend}}
                                 </button>
                                 <ul class="dropdown-menu trend-dropdown">
-                                    <li><a href="#">trump</a></li>
-                                    <li><a href="#">isis</a></li>
-                                    <li><a href="#">zika</a></li>
+                                    {{#each getAllTrends}}
+                                    <li><a href="#">{{this}}</a></li>
+                                    {{/each}}
                                 </ul>
                             </div>
                         </p>

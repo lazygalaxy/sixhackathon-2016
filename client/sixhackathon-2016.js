@@ -6,6 +6,14 @@ getTrend = function () {
     return Session.get('trend');
 }
 
+getAllTrends = function () {
+    var myArray = trends.find().fetch();
+    var distinctArray = _.uniq(myArray, false, function (d) {
+        return d.trend
+    });
+    return _.pluck(distinctArray, 'trend');;
+}
+
 Session.set('symbol', '');
 setSymbol = function (newSymbol) {
     console.log(newSymbol + " 1");

@@ -21,6 +21,9 @@ Template.toolbar.helpers({
     },
     getSymbol: function () {
         return getSymbol();
+    },
+    getAllTrends: function () {
+        return getAllTrends();
     }
 });
 
