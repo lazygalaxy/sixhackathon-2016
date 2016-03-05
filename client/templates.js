@@ -15,21 +15,41 @@ Template.hello.events({
 });
 
 Template.myTemplate.topGenresChart = function () {
-    var theData = [];
-    instruments.find({}).forEach(function (line) {
-        var point = [line.date, line.price];
-        theData.push(point);
+    var trendData = [];
+    trends.find({}, {
+        sort: {
+            date: 1
+        }
+    }).forEach(function (line) {
+        if (line.trend == "trump") {
+            //console.log(line);
+            var point = [new Date(line.date), line.value];
+            trendData.push(point);
+            console.log(line.date);
+        }
     });
 
-    //    var trendData = [];
-    //    trends.find({
-    //        "trend": {
-    //            "$ne": 'trump'
-    //        }
-    //    }).forEach(function (line) {
-    //        var point = [line.date, line.value];
-    //        trendData.push(point);
-    //    });
+    var theData = [];
+    instruments.find({}, {
+        sort: {
+            date: 1
+        }
+    }).forEach(function (line) {
+        var point = [line.date, line.price];
+        theData.push(point);
+        //console.log(line.date);
+    });
+
+    var theData2 = [];
+    instruments.find({}, {
+        sort: {
+            date: 1
+        }
+    }).forEach(function (line) {
+        var point = [line.date, line.price * 0.2];
+        theData2.push(point);
+        //console.log(line.date);
+    });
 
     return {
         chart: {
@@ -49,7 +69,8 @@ Template.myTemplate.topGenresChart = function () {
         legend: {
             enabled: false
         },
-        series: [{
+        series: [
+            {
                 type: 'line',
                 name: 'SPX',
                 data: theData,
@@ -57,14 +78,15 @@ Template.myTemplate.topGenresChart = function () {
                     valueDecimals: 2
                 }
             }
-//                 , {
-//            type: 'line',
-//            name: 'Trump',
-//            data: trendData,
-//            tooltip: {
-//                valueDecimals: 2
-//            }
-//        }
+            ,
+            {
+                type: 'line',
+                name: 'Trump',
+                data: trendData,
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }
                 ]
     };
 };
