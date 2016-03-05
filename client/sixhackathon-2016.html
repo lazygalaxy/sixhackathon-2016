@@ -1,16 +1,22 @@
 <head>
     <title>sixhackathon-201</title>
+    <script src="jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="jquery-jvectormap-world-mill-en.js"></script>
 </head>
 
 <body>
-    <h1>Welcome to Meteor!</h1> {{> hello}} {{> myTemplate}}
+    <h1>Welcome to Meteor!</h1> {{> theMap}}
 </body>
 
-<template name="myTemplate">
+<template name="theMap">
+    <div id="world-map" style="width: 600px; height: 400px"></div>
+</template>
+
+<!--template name="myTemplate">
     {{> highchartsHelper chartId="test" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
 </template>
 
 <template name="hello">
     <button>Click Me</button>
     <p>You've pressed the button {{counter}} times.</p>
-</template>
+</template-->

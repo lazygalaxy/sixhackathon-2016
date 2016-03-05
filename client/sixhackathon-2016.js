@@ -1,0 +1,3 @@
+  $(function () {
+      $('#world-map').vectorMap();
+  });

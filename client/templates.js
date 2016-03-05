@@ -11,8 +11,38 @@ Template.hello.events({
     'click button': function () {
         // increment the counter when button is clicked
         Session.set('counter', Session.get('counter') + 1);
+        initGlobalMap();
     }
 });
+
+
+initGlobalMap = function () {
+    console.log("hello");
+    $('#world-map-gdp').vectorMap({
+        map: 'world_mill_en',
+        series: {
+            regions: [{
+                values: gdpData,
+                scale: ['#C8EEFF', '#0071A4'],
+                normalizeFunction: 'polynomial'
+      }]
+        },
+        onRegionTipShow: function (e, el, code) {
+            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+        }
+    });
+
+
+    //var container = document.getElementById('visjs_area');
+}
+
+
+
+
+
+
+
+
 
 Template.myTemplate.topGenresChart = function () {
     var theData = [];
