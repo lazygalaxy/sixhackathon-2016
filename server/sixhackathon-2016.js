@@ -6,13 +6,13 @@
                   if (err) {
                       console.log(err);
                   } else {
-                      console.log(result.data.dataset.data);
                       result.data.dataset.data.forEach(function (line) {
                           instruments.insert({
                               symbol: 'SPX',
-                              tr: line[0],
-                              net_tr: line[1],
-                              price: line[2]
+                              date: new Date(line[0]),
+                              tr: line[1],
+                              net_tr: line[2],
+                              price: line[3]
                           });
                       });
                   }

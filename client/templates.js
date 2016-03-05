@@ -17,7 +17,9 @@ Template.hello.events({
 Template.myTemplate.topGenresChart = function () {
     var theData = [];
     instruments.find({}).forEach(function (line) {
-        theData.push(line.price);
+        var point = [line.date, line.price];
+        theData.push(point);
+        console.log(point);
     });
 
     return {
@@ -25,7 +27,7 @@ Template.myTemplate.topGenresChart = function () {
             zoomType: 'x'
         },
         title: {
-            text: 'AAPL Stock Price'
+            text: 'SPX Price'
         },
         xAxis: {
             type: 'datetime'
