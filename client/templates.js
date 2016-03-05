@@ -74,12 +74,14 @@ Template.myTemplate.topGenresChart = function () {
         yAxis: [{ // Primary yAxis
             title: {
                 text: 'Price'
-            },
-            opposite: true
+            }
         }, {
             title: {
                 text: 'Trend'
-            }
+            },
+            min: 0,
+            max: 100,
+            opposite: true
         }],
         legend: {
             enabled: false
