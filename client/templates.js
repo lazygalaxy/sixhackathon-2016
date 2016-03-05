@@ -21,15 +21,15 @@ Template.myTemplate.topGenresChart = function () {
         theData.push(point);
     });
 
-    var trendData = [];
-    trends.find({
-        "trend": {
-            "$eq": 'trump'
-        }
-    }).forEach(function (line) {
-        var point = [line.date, line.value];
-        trendData.push(point);
-    });
+    //    var trendData = [];
+    //    trends.find({
+    //        "trend": {
+    //            "$ne": 'trump'
+    //        }
+    //    }).forEach(function (line) {
+    //        var point = [line.date, line.value];
+    //        trendData.push(point);
+    //    });
 
     return {
         chart: {
@@ -50,19 +50,21 @@ Template.myTemplate.topGenresChart = function () {
             enabled: false
         },
         series: [{
-            type: 'line',
-            name: 'SPX',
-            data: theData,
-            tooltip: {
-                valueDecimals: 2
+                type: 'line',
+                name: 'SPX',
+                data: theData,
+                tooltip: {
+                    valueDecimals: 2
+                }
             }
-            }, {
-            type: 'line',
-            name: 'Trump',
-            data: trendData,
-            tooltip: {
-                valueDecimals: 2
-            }
-            }]
+//                 , {
+//            type: 'line',
+//            name: 'Trump',
+//            data: trendData,
+//            tooltip: {
+//                valueDecimals: 2
+//            }
+//        }
+                ]
     };
 };
