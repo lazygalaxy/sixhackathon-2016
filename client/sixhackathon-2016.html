@@ -1,0 +1,16 @@
+<head>
+    <title>sixhackathon-201</title>
+</head>
+
+<body>
+    <h1>Welcome to Meteor!</h1> {{> myTemplate}}
+</body>
+
+<template name="myTemplate">
+    {{> highchartsHelper chartId="test" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
+</template>
+
+<template name="hello">
+    <button>Click Me</button>
+    <p>You've pressed the button {{counter}} times.</p>
+</template>
