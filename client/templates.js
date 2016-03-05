@@ -15,6 +15,19 @@ Template.hello.events({
 });
 
 Template.myTemplate.topGenresChart = function () {
+    var theData = [];
+    instruments.find({
+        symbol: theSymbol
+    }, {
+        sort: {
+            date: 1
+        }
+    }).forEach(function (line) {
+        var point = [line.date, line.price];
+        theData.push(point);
+        //console.log(line.date);
+    });
+
     var trendData = [];
     trends.find({}, {
         sort: {
@@ -29,24 +42,13 @@ Template.myTemplate.topGenresChart = function () {
         }
     });
 
-    var theData = [];
-    instruments.find({}, {
-        sort: {
-            date: 1
-        }
-    }).forEach(function (line) {
-        var point = [line.date, line.price];
-        theData.push(point);
-        //console.log(line.date);
-    });
-
-    console.log(trendData);
+    //console.log(trendData);
     return {
         chart: {
             zoomType: 'x'
         },
         title: {
-            text: 'SPX Price'
+            text: theSymbol + ' vs Trend'
         },
         xAxis: {
             type: 'datetime'
