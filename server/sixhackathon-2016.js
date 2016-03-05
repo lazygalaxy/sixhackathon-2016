@@ -19,22 +19,24 @@ Meteor.startup(function () {
             });
     }
 
-    if (!trends.findOne()) {
-        console.log("loading trend");
 
-        var fileContents = Assets.getText('trends.csv');
-        var fileContentsArray = fileContents.split(/\r?\n/);
-        console.log(fileContentsArray.length);
+    console.log("loading trend");
 
-        var line = fileContentsArray[0];
-        var trendArray = line.split(',');
+    var fileContents = Assets.getText('trends.csv');
+    var fileContentsArray = fileContents.split(/\r?\n/);
+    console.log(fileContentsArray.length);
 
-        for (var i = 1; i < fileContentsArray.length; i++) {
-            var line = fileContentsArray[i];
-            var values = line.split(',');
-            //console.log(values);
+    var line = fileContentsArray[0];
+    var trendArray = line.split(',');
+    for (var j = 1; j < trendArray.length; j++) {
+        if (!trends.findOne({
+                trend: trendArray[j]
+            })) {
+            for (var i = 1; i < fileContentsArray.length; i++) {
 
-            for (var j = 1; j < trendArray.length; j++) {
+                var line = fileContentsArray[i];
+                var values = line.split(',');
+                //console.log(values);
                 trends.insert({
                     trend: trendArray[j],
                     date: new Date(values[0].substring(0, 10)),
