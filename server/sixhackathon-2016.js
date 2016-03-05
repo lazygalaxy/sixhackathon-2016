@@ -7,6 +7,12 @@ Meteor.methods({
             var thePriceIndex = 3;
             if (theSymbol.startsWith("WIKI")) {
                 thePriceIndex = 11;
+            } else if (theSymbol.startsWith("YAHOO")) {
+                thePriceIndex = 6;
+            } else if (theSymbol.startsWith("ODA")) {
+                thePriceIndex = 1;
+            } else if (theSymbol.startsWith("COINBASE")) {
+                thePriceIndex = 1;
             }
             HTTP.get("https://www.quandl.com/api/v3/datasets/" + theSymbol + ".json?api_key=tH9A8D4yp3PfmZPkYMz9", {},
                 function (err, result) {
