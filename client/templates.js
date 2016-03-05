@@ -15,6 +15,17 @@ Template.hello.events({
     }
 });
 
+Template.toolbar.helpers({
+    getTrend: function () {
+        return getTrend();
+    }
+});
+
+Template.toolbar.events({
+    "click .trend-dropdown li a": function (event) {
+        setTrend(event.target.text);
+    }
+});
 
 initGlobalMap = function () {
     console.log("hello");
@@ -35,6 +46,7 @@ initGlobalMap = function () {
 
 Template.myTemplate.topGenresChart = function () {
     var theData = [];
+    var theTrend = getTrend();
     instruments.find({
         symbol: theSymbol
     }, {

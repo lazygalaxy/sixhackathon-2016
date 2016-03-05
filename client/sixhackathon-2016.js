@@ -1,3 +1,11 @@
+Session.set('trend', 'isis');
+setTrend = function (newTrend) {
+    Session.set('trend', newTrend);
+}
+getTrend = function () {
+    return Session.get('trend');
+}
+
 /*
 $(function () {
       var data = {

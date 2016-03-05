@@ -19,9 +19,6 @@ Meteor.startup(function () {
             });
     }
 
-
-    console.log("loading trend");
-
     var fileContents = Assets.getText('trends.csv');
     var fileContentsArray = fileContents.split(/\r?\n/);
 
