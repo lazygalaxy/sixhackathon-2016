@@ -15,8 +15,10 @@ Template.hello.events({
 });
 
 Template.myTemplate.topGenresChart = function () {
-    var chart_data = instruments.find({});
-    console.log(chart_data);
+    var theData = [];
+    instruments.find({}).forEach(function (line) {
+        theData.push(line.price);
+    });
 
     return {
         chart: {
@@ -38,8 +40,8 @@ Template.myTemplate.topGenresChart = function () {
         },
         series: [{
             type: 'line',
-            name: 'AAPL',
-            data: Session.get('thedata'),
+            name: 'SPX',
+            data: theData,
             tooltip: {
                 valueDecimals: 2
             }
