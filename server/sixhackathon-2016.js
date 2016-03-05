@@ -27,9 +27,10 @@ Meteor.methods({
 });
 
 Meteor.startup(function () {
-    for (var i = 1; i < 100; i++) {
+    for (var k = 1; k < 100; k++) {
+        console.log("start " + k);
         try {
-            var fileContents = Assets.getText('trends' + i + '.csv');
+            var fileContents = fileContents = Assets.getText('trends' + k + '.csv');
         } catch (err) {
             break;
         }
@@ -44,7 +45,6 @@ Meteor.startup(function () {
                 for (var i = 1; i < fileContentsArray.length; i++) {
                     var line = fileContentsArray[i];
                     var values = line.split(',');
-                    //console.log(values);
                     trends.insert({
                         trend: trendArray[j],
                         date: new Date(values[0].substring(0, 10)),
