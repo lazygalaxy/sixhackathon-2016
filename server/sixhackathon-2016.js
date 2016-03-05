@@ -1,25 +1,32 @@
-Meteor.startup(function () {
-    var theSymbol = "WIKI/SWHC";
-    if (!instruments.findOne({
-            symbol: theSymbol
-        })) {
-        console.log("loading instruments");
-        HTTP.get("https://www.quandl.com/api/v3/datasets/" + theSymbol + ".json?api_key=tH9A8D4yp3PfmZPkYMz9", {},
-            function (err, result) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    result.data.dataset.data.forEach(function (line) {
-                        instruments.insert({
-                            symbol: theSymbol,
-                            date: new Date(line[0]),
-                            price: line[thePriceIndex]
+Meteor.methods({
+    'loadData': function (theSymbol) {
+        if (!instruments.findOne({
+                symbol: theSymbol
+            })) {
+            console.log("loading instrument " + theSymbol);
+            var thePriceIndex = 3;
+            if (theSymbol.startsWith("WIKI")) {
+                thePriceIndex = 11;
+            }
+            HTTP.get("https://www.quandl.com/api/v3/datasets/" + theSymbol + ".json?api_key=tH9A8D4yp3PfmZPkYMz9", {},
+                function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        result.data.dataset.data.forEach(function (line) {
+                            instruments.insert({
+                                symbol: theSymbol,
+                                date: new Date(line[0]),
+                                price: line[thePriceIndex]
+                            });
                         });
-                    });
-                }
-            });
+                    }
+                });
+        }
     }
+});
 
+Meteor.startup(function () {
     var fileContents = Assets.getText('trends.csv');
     var fileContentsArray = fileContents.split(/\r?\n/);
 
