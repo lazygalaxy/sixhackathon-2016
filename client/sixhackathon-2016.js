@@ -6,6 +6,14 @@ getTrend = function () {
     return Session.get('trend');
 }
 
+Session.set('symbol', 'WIKI/SWHC');
+setSymbol = function (newSymbol) {
+    Session.set('symbol', newSymbol);
+}
+getSymbol = function () {
+    return Session.get('symbol');
+}
+
 /*
 $(function () {
       var data = {

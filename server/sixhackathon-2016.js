@@ -1,4 +1,5 @@
 Meteor.startup(function () {
+    var theSymbol = "WIKI/SWHC";
     if (!instruments.findOne({
             symbol: theSymbol
         })) {

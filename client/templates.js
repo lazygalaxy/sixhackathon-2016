@@ -18,12 +18,18 @@ Template.hello.events({
 Template.toolbar.helpers({
     getTrend: function () {
         return getTrend();
+    },
+    getSymbol: function () {
+        return getSymbol();
     }
 });
 
 Template.toolbar.events({
     "click .trend-dropdown li a": function (event) {
         setTrend(event.target.text);
+    },
+    "click .symbol-dropdown li a": function (event) {
+        setSymbol(event.target.text);
     }
 });
 
@@ -46,7 +52,7 @@ initGlobalMap = function () {
 
 Template.myTemplate.topGenresChart = function () {
     var theData = [];
-    var theTrend = getTrend();
+    var theSymbol = getSymbol();
     instruments.find({
         symbol: theSymbol
     }, {
@@ -59,6 +65,7 @@ Template.myTemplate.topGenresChart = function () {
         //console.log(line.date);
     });
 
+    var theTrend = getTrend();
     var trendData = [];
     trends.find({
         trend: theTrend
