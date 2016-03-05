@@ -19,7 +19,16 @@ Template.myTemplate.topGenresChart = function () {
     instruments.find({}).forEach(function (line) {
         var point = [line.date, line.price];
         theData.push(point);
-        console.log(point);
+    });
+
+    var trendData = [];
+    trends.find({
+        "trend": {
+            "$eq": 'trump'
+        }
+    }).forEach(function (line) {
+        var point = [line.date, line.value];
+        trendData.push(point);
     });
 
     return {
@@ -44,6 +53,13 @@ Template.myTemplate.topGenresChart = function () {
             type: 'line',
             name: 'SPX',
             data: theData,
+            tooltip: {
+                valueDecimals: 2
+            }
+            }, {
+            type: 'line',
+            name: 'Trump',
+            data: trendData,
             tooltip: {
                 valueDecimals: 2
             }
