@@ -1,5 +1,3 @@
-
-
 //Template.hello.events({
 //    'click button': function () {
 //        // increment the counter when button is clicked
@@ -47,79 +45,109 @@ Template.toolbar.events({
 //}
 
 Template.myTemplate.topGenresChart = function () {
-    var theData = [];
     var theSymbol = getSymbol();
-    instruments.find({
-        symbol: theSymbol
-    }, {
-        sort: {
-            date: 1
-        }
-    }).forEach(function (line) {
-        var point = [line.date, line.price];
-        theData.push(point);
-        //console.log(line.date);
-    });
-
     var theTrend = getTrend();
-    var trendData = [];
-    trends.find({
-        trend: theTrend
-    }, {
-        sort: {
-            date: 1
-        }
-    }).forEach(function (line) {
-        //console.log(line);
-        var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
-        trendData.push(point);
-    });
+    if (theSymbol && theTrend) {
+        var minDate = instruments.findOne({
+            symbol: theSymbol
+        }, {
+            sort: {
+                date: 1
+            }
+        }).date;
 
-    return {
-        chart: {
-            zoomType: 'x'
-        },
-        title: {
-            text: theSymbol + ' vs Trend ' + theTrend
-        },
-        xAxis: {
-            type: 'datetime'
-        },
-        yAxis: [{ // Primary yAxis
-            title: {
-                text: 'Price'
+        var trendMinDate = trends.findOne({
+            trend: theTrend
+        }, {
+            sort: {
+                date: 1
+            }
+        }).date;
+
+        if (minDate < trendMinDate) {
+            minDate = trendMinDate;
+        }
+
+        console.log("mindate: " + minDate);
+
+        var theData = [];
+        instruments.find({
+            symbol: theSymbol,
+            date: {
+                $gte: minDate
             }
         }, {
-            title: {
-                text: 'Trend'
+            sort: {
+                date: 1
+            }
+        }).forEach(function (line) {
+            var point = [line.date, line.price];
+            theData.push(point);
+            //console.log(line.date);
+        });
+
+        var trendData = [];
+        trends.find({
+            trend: theTrend,
+            date: {
+                $gte: minDate
+            }
+        }, {
+            sort: {
+                date: 1
+            }
+        }).forEach(function (line) {
+            //console.log(line);
+            var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
+            trendData.push(point);
+        });
+
+        return {
+            chart: {
+                zoomType: 'x'
             },
-            min: 0,
-            max: 100,
-            opposite: true
-        }],
-        legend: {
-            enabled: false
-        },
-        series: [
-            {
-                type: 'line',
-                yAxis: 0,
-                name: 'SPX',
-                data: theData,
-                tooltip: {
-                    valueDecimals: 2
+            title: {
+                text: theSymbol + ' vs Trend ' + theTrend
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            yAxis: [{ // Primary yAxis
+                title: {
+                    text: 'Price'
                 }
+        }, {
+                title: {
+                    text: 'Trend'
+                },
+                min: 0,
+                max: 100,
+                opposite: true
+        }],
+            legend: {
+                enabled: false
+            },
+            series: [
+                {
+                    type: 'line',
+                    yAxis: 0,
+                    name: 'SPX',
+                    data: theData,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
             }
             ,
-            {
-                type: 'line',
-                yAxis: 1,
-                name: theTrend,
-                data: trendData,
-                tooltip: {
-                    valueDecimals: 2
-                }
+                {
+                    type: 'line',
+                    yAxis: 1,
+                    name: theTrend,
+                    data: trendData,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
             }
                 ]
-    };
+        };
+    }
 };
