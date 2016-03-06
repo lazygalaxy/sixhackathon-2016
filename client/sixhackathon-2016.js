@@ -11,11 +11,18 @@ getAllTrends = function () {
     var distinctArray = _.uniq(myArray, false, function (d) {
         return d.trend
     });
-    return _.pluck(distinctArray, 'trend').sort();
+    var array = _.pluck(distinctArray, 'trend').sort();
+    array.splice(array.indexOf("migrant"), 1);
+    array.splice(array.indexOf("grexit"), 1);
+    array.splice(array.indexOf("brexit"), 1);
+    array.splice(array.indexOf("jesuischarlie"), 1);
+    array.splice(array.indexOf("merkel"), 1);
+    array.splice(array.indexOf("refugee"), 1);
+    return array;
 }
 
 getAllSymbols = function () {
-    return ["WIKI/SWHC", "SPDJ/SPX", "YAHOO/INDEX_FCHI", "YAHOO/INDEX_SSMI", "YAHOO/INDEX_GDAXI", "YAHOO/INDEX_STOXX50E", "YAHOO/INDEX_N225", "YAHOO/MSCI", "YAHOO/INDEX_VIX", "YAHOO/HK_3033", "YAHOO/INDEX_HSI", "ODA/POILBRE_USD", "COINBASE/USD"].sort();
+    return ["WIKI/SWHC", "SPDJ/SPX", "YAHOO/INDEX_FCHI", "YAHOO/INDEX_SSMI", "YAHOO/INDEX_GDAXI", "YAHOO/INDEX_STOXX50E", "YAHOO/INDEX_N225", "YAHOO/MSCI", "YAHOO/INDEX_VIX", "YAHOO/HK_3033", "YAHOO/INDEX_HSI", "ODA/POILBRE_USD"].sort();
 }
 
 Session.set('symbol', '');
