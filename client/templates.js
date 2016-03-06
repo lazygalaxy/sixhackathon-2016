@@ -1,19 +1,12 @@
-// counter starts at 0
-Session.setDefault('counter', 0);
 
-Template.hello.helpers({
-    counter: function () {
-        return Session.get('counter');
-    }
-});
 
-Template.hello.events({
-    'click button': function () {
-        // increment the counter when button is clicked
-        Session.set('counter', Session.get('counter') + 1);
-        initGlobalMap();
-    }
-});
+//Template.hello.events({
+//    'click button': function () {
+//        // increment the counter when button is clicked
+//        Session.set('counter', Session.get('counter') + 1);
+//        initGlobalMap();
+//    }
+//});
 
 Template.toolbar.helpers({
     getTrend: function () {
@@ -36,22 +29,22 @@ Template.toolbar.events({
     }
 });
 
-initGlobalMap = function () {
-    console.log("hello");
-    $('#world-map-gdp').vectorMap({
-        map: 'world_mill_en',
-        series: {
-            regions: [{
-                values: gdpData,
-                scale: ['#C8EEFF', '#0071A4'],
-                normalizeFunction: 'polynomial'
-      }]
-        },
-        onRegionTipShow: function (e, el, code) {
-            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-        }
-    });
-}
+//initGlobalMap = function () {
+//    console.log("hello");
+//    $('#world-map-gdp').vectorMap({
+//        map: 'world_mill_en',
+//        series: {
+//            regions: [{
+//                values: gdpData,
+//                scale: ['#C8EEFF', '#0071A4'],
+//                normalizeFunction: 'polynomial'
+//      }]
+//        },
+//        onRegionTipShow: function (e, el, code) {
+//            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+//        }
+//    });
+//}
 
 Template.myTemplate.topGenresChart = function () {
     var theData = [];
