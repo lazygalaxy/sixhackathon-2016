@@ -50,6 +50,9 @@ Template.toolbar.events({
 Template.myTemplate.topGenresChart = function () {
     var theSymbol = getSymbol();
     var theTrend = getTrend();
+
+    var theData = [];
+    var trendData = [];
     if (theSymbol && theTrend) {
         var minDate = instruments.findOne({
             symbol: theSymbol
@@ -73,7 +76,7 @@ Template.myTemplate.topGenresChart = function () {
 
         console.log("mindate: " + minDate);
 
-        var theData = [];
+
         instruments.find({
             symbol: theSymbol,
             date: {
@@ -89,7 +92,6 @@ Template.myTemplate.topGenresChart = function () {
             //console.log(line.date);
         });
 
-        var trendData = [];
         trends.find({
             trend: theTrend,
             date: {
@@ -104,53 +106,53 @@ Template.myTemplate.topGenresChart = function () {
             var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
             trendData.push(point);
         });
+    }
 
-        return {
-            chart: {
-                zoomType: 'x'
-            },
+    return {
+        chart: {
+            zoomType: 'x'
+        },
+        title: {
+            text: theSymbol + ' vs Trend ' + theTrend
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: [{ // Primary yAxis
             title: {
-                text: theSymbol + ' vs Trend ' + theTrend
-            },
-            xAxis: {
-                type: 'datetime'
-            },
-            yAxis: [{ // Primary yAxis
-                title: {
-                    text: 'Price'
-                }
+                text: 'Price'
+            }
         }, {
-                title: {
-                    text: 'Trend'
-                },
-                min: 0,
-                max: 100,
-                opposite: true
-        }],
-            legend: {
-                enabled: false
+            title: {
+                text: 'Trend'
             },
-            series: [
-                {
-                    type: 'line',
-                    yAxis: 0,
-                    name: 'SPX',
-                    data: theData,
-                    tooltip: {
-                        valueDecimals: 2
-                    }
+            min: 0,
+            max: 100,
+            opposite: true
+        }],
+        legend: {
+            enabled: false
+        },
+        series: [
+            {
+                type: 'line',
+                yAxis: 0,
+                name: 'SPX',
+                data: theData,
+                tooltip: {
+                    valueDecimals: 2
+                }
             }
             ,
-                {
-                    type: 'line',
-                    yAxis: 1,
-                    name: theTrend,
-                    data: trendData,
-                    tooltip: {
-                        valueDecimals: 2
-                    }
+            {
+                type: 'line',
+                yAxis: 1,
+                name: theTrend,
+                data: trendData,
+                tooltip: {
+                    valueDecimals: 2
+                }
             }
                 ]
-        };
-    }
+    };
 };
