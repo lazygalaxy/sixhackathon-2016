@@ -21,3 +21,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 http
 maazalik:highcharts
 twbs:bootstrap
+iron:router

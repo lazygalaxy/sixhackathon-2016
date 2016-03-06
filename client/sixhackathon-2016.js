@@ -1,3 +1,11 @@
+//$(window).load(function () { // makes sure the whole site is loaded
+//    $('#status').fadeOut(); // will first fade out the loading animation
+//    $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+//    $('body').delay(350).css({
+//        'overflow': 'visible'
+//    });
+//})
+
 Session.set('trend', '');
 setTrend = function (newTrend) {
     Session.set('trend', newTrend);
@@ -11,7 +19,11 @@ getAllTrends = function () {
     var distinctArray = _.uniq(myArray, false, function (d) {
         return d.trend
     });
-    return _.pluck(distinctArray, 'trend');;
+    return _.pluck(distinctArray, 'trend').sort();
+}
+
+getAllSymbols = function () {
+    return ["WIKI/SWHC", "SPDJ/SPX", "YAHOO/INDEX_FCHI", "YAHOO/INDEX_SSMI", "YAHOO/INDEX_GDAXI", "YAHOO/INDEX_STOXX50E", "YAHOO/INDEX_N225", "YAHOO/MSCI", "YAHOO/INDEX_VIX", "YAHOO/HK_3033", "YAHOO/INDEX_HSI", "ODA/POILBRE_USD", "COINBASE/USD"].sort();
 }
 
 Session.set('symbol', '');

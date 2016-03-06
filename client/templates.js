@@ -1,19 +1,10 @@
-// counter starts at 0
-Session.setDefault('counter', 0);
-
-Template.hello.helpers({
-    counter: function () {
-        return Session.get('counter');
-    }
-});
-
-Template.hello.events({
-    'click button': function () {
-        // increment the counter when button is clicked
-        Session.set('counter', Session.get('counter') + 1);
-        initGlobalMap();
-    }
-});
+//Template.hello.events({
+//    'click button': function () {
+//        // increment the counter when button is clicked
+//        Session.set('counter', Session.get('counter') + 1);
+//        initGlobalMap();
+//    }
+//});
 
 Template.toolbar.helpers({
     getTrend: function () {
@@ -24,6 +15,9 @@ Template.toolbar.helpers({
     },
     getAllTrends: function () {
         return getAllTrends();
+    },
+    getAllSymbols: function () {
+        return getAllSymbols();
     }
 });
 
@@ -36,51 +30,83 @@ Template.toolbar.events({
     }
 });
 
-initGlobalMap = function () {
-    console.log("hello");
-    $('#world-map-gdp').vectorMap({
-        map: 'world_mill_en',
-        series: {
-            regions: [{
-                values: gdpData,
-                scale: ['#C8EEFF', '#0071A4'],
-                normalizeFunction: 'polynomial'
-      }]
-        },
-        onRegionTipShow: function (e, el, code) {
-            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-        }
-    });
-}
+//initGlobalMap = function () {
+//    console.log("hello");
+//    $('#world-map-gdp').vectorMap({
+//        map: 'world_mill_en',
+//        series: {
+//            regions: [{
+//                values: gdpData,
+//                scale: ['#C8EEFF', '#0071A4'],
+//                normalizeFunction: 'polynomial'
+//      }]
+//        },
+//        onRegionTipShow: function (e, el, code) {
+//            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+//        }
+//    });
+//}
 
 Template.myTemplate.topGenresChart = function () {
-    var theData = [];
     var theSymbol = getSymbol();
-    instruments.find({
-        symbol: theSymbol
-    }, {
-        sort: {
-            date: 1
-        }
-    }).forEach(function (line) {
-        var point = [line.date, line.price];
-        theData.push(point);
-        //console.log(line.date);
-    });
-
     var theTrend = getTrend();
+
+    var theData = [];
     var trendData = [];
-    trends.find({
-        trend: theTrend
-    }, {
-        sort: {
-            date: 1
+    if (theSymbol && theTrend) {
+        var minDate = instruments.findOne({
+            symbol: theSymbol
+        }, {
+            sort: {
+                date: 1
+            }
+        }).date;
+
+        var trendMinDate = trends.findOne({
+            trend: theTrend
+        }, {
+            sort: {
+                date: 1
+            }
+        }).date;
+
+        if (minDate < trendMinDate) {
+            minDate = trendMinDate;
         }
-    }).forEach(function (line) {
-        //console.log(line);
-        var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
-        trendData.push(point);
-    });
+
+        console.log("mindate: " + minDate);
+
+
+        instruments.find({
+            symbol: theSymbol,
+            date: {
+                $gte: minDate
+            }
+        }, {
+            sort: {
+                date: 1
+            }
+        }).forEach(function (line) {
+            var point = [line.date, line.price];
+            theData.push(point);
+            //console.log(line.date);
+        });
+
+        trends.find({
+            trend: theTrend,
+            date: {
+                $gte: minDate
+            }
+        }, {
+            sort: {
+                date: 1
+            }
+        }).forEach(function (line) {
+            //console.log(line);
+            var point = [Date.UTC(line.date.getFullYear(), line.date.getMonth(), line.date.getDate()), line.value];
+            trendData.push(point);
+        });
+    }
 
     return {
         chart: {
