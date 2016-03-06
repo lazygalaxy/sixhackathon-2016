@@ -39,18 +39,9 @@
                                     <span class="caret"></span> Symbol {{getSymbol}}
                                 </button>
                                 <ul class="dropdown-menu symbol-dropdown">
-                                    <li><a href="#">WIKI/SWHC</a></li>
-                                    <li><a href="#">SPDJ/SPX</a></li>
-                                    <li><a href="#">YAHOO/INDEX_FCHI</a></li>
-                                    <li><a href="#">YAHOO/INDEX_SSMI</a></li>
-                                    <li><a href="#">YAHOO/INDEX_GDAXI</a></li>
-                                    <li><a href="#">YAHOO/INDEX_STOXX50E</a></li>
-                                    <li><a href="#">YAHOO/INDEX_N225</a></li>
-                                    <li><a href="#">YAHOO/MSCI</a></li>
-                                    <li><a href="#">YAHOO/INDEX_VIX</a></li>
-                                    <li><a href="#">ODA/POILBRE_USD</a></li>
-                                    <li><a href="#">COINBASE/USD</a></li>
-                                    <li><a href="#">SPDJ/SPX</a></li>
+                                    {{#each getAllSymbols}}
+                                    <li><a href="#">{{this}}</a></li>
+                                    {{/each}}
 
                                 </ul>
                             </div>
